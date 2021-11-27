@@ -16,11 +16,14 @@ const Form = () => {
     function handleSubmit(event) {
         event.preventDefault();
         
-        console.log({ login, password });
-
-        if (login === '' || password === '') {
+        if (login.trim() === '' || password.trim() === '') {
             alert('Error, write something!')
+        } else {
+            console.log({ login, password });
         }
+
+        login = '';
+        password = '';
     }
     return (
         <form onSubmit={handleSubmit} className={classes.auth}>
