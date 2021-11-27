@@ -20,17 +20,17 @@ const Form = () => {
             alert('Error, write something!')
         } else {
             console.log({ login, password });
-        }
-
-        login = '';
-        password = '';
+            login = '';
+            password = '';
+            event.target.reset();
+        }     
     }
+
     return (
         <form onSubmit={handleSubmit} className={classes.auth}>
             <input onChange={(e) => handleChangeInput(e, 'login')} type="text" name='login' />
             <input onChange={(e) => handleChangeInput(e, 'password')} type="password" name='password' />
             <button type='submit'>Войти</button>
-            <button type='reset'>Очистить поля для ввода</button>
         </form>
     );
 };
