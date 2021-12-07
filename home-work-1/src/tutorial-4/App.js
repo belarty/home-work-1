@@ -59,7 +59,6 @@ const App = () => {
     let handleClickGenerate = () => {
         setItems([generatePhrase(), ...items]);
     }
-    //Так я не понял, у меня один стейт должен быть, но в него массив фраз поместить? А как
 
     let handleClickRemove = () => {
         setItems([]);
