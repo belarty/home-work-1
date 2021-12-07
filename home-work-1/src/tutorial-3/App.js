@@ -1,32 +1,23 @@
-import React from 'react';
-class App extends React.Component {
-    function moveTask() {
-    let inputValue = ['fefeaf'];
-let searchValue;
-let ul = document.querySelector('#ul_elem');
-ul = ['gfsfsa'];
-    inputValue.push(searchValue);
-    inputValue.forEach(element => {
-        ul.innerHTML += `
-            <li>
-            ${element}
-            </li>
-            `;
+import React, { useState } from 'react';
+import Students from './Students';
+
+const App = () => {
+    const [mainList, setMainList] = useState([]);
+
+    let onMoveAction = (arr) => {
+        debugger
+        setMainList([...mainList, ...arr]);
     }
+    
+    return (
+        <div>
+            <Students onMove={onMoveAction} />
+            <ul>{mainList.map((name) => <li>{name}</li>)}</ul>
+        </div>
     );
-    document.querySelector('input').value = '';
-}
-render() {
-    return <div>
-        <input value={searchValue} placeholder='Введите задачу' />
-        <button onClick={moveTask}>Добавить задачу</button>
-        <ul id='ul_elem'>asda{inputValue}</ul>
-    </div>;
-}
-}
+};
 
 export default App;
-
 
 
 
