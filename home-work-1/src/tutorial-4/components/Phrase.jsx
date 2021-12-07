@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from '../App.css';
 
-const Phrase = (generateWord) => {
+const Phrase = () => {
 
     return (
         <div>
-            {generateWord}
+            
         </div>
     );
 };
