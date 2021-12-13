@@ -85,7 +85,6 @@ const App = () => {
                 )}
                 </ul>
                 <div className={styles.commentsForm}>
-                    <Comments />
                     <TextField onChange={(e) => handleChangeValue(e)} name='fullName' sx={{ marginBottom: 2, marginTop: 2, width: 400 }} id="filled-basic" label="Имя" placeholder='Введите имя' />
                     <TextField onChange={(e) => handleChangeValue(e)} name='email' sx={{ marginBottom: 2, width: 400 }} id="filled-basic" label="Почта" placeholder='Введите почту' />
                     <TextField
