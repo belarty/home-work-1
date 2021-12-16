@@ -7,70 +7,58 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 
 const App = () => {
     const [comments, setComments] = useState([]);
-
     const [inputValue, setInputValue] = useState({
-        id: Date.now(),
         fullName: '',
         email: '',
         text: '',
-    });
+    })
 
-    const handleOnClick = (e) => {
-        e.preventDefault()
-        setComments(
-            [...comments, inputValue]
-        )
-        e.target.reset();
-        setInputValue({})
-    }
-
-    const handleChangeValue = (event) => {
+    const handleInputValue = (event) => {
         const { name, value } = event.target;
-        setInputValue({
-            ...inputValue, [name]: value
-        })
+        setInputValue({ ...inputValue, [name]: value })
     }
 
-    const handleRemove = (event) => {
-        if(event.target.id){
-            setInputValue({})
-        }
+    const addNewComment = (e) => {
+        e.preventDefault();
+        setComments([...comments, { ...inputValue, createdAt: new Date() }]);
     }
+    const handleRemoveComment = (createdAt) => {
+        const remove = comments.filter((comment) => comment.createdAt !== createdAt)
+        setComments([...remove])
+    }
+    useEffect(() => {
+        const commentTo = JSON.parse(localStorage.getItem('comments')) || []
+        setComments([...commentTo])
+    }, []);
 
     useEffect(() => {
-        console.log('ОТРАБОТАЛ РЕНДЕР');
         localStorage.setItem('comments', JSON.stringify(comments))
     }, [comments]);
 
-    useEffect(() => {
-        console.log('ОЧИСТИЛ СПИСОК');
-    }, [setInputValue]);
-
     return (
         <div className={styles.form}>
-            <form onSubmit={handleOnClick}>
+            <form onSubmit={addNewComment}>
                 <h1>Обратная Связь: </h1>
-                <ul>{comments.map((comment) => comment
-                    ? <div className={styles.commentsFormList} key={comment.id}>
+                {comments.map((comment) =>
+                    <div key={comment.createdAt} className={styles.commentsFormList}>
                         <div>
                             <ConfigProvider color>
-                                <Avatar size={70} name={comment.fullName} round={true} />
+                                <Avatar size={70} round={true} />
                             </ConfigProvider>
                         </div>
                         <div className={styles.commentsAvatar}>
-                            <h3 className={styles.fullName}>{comment.fullName}</h3>
+                            <h3>{comment.fullName}</h3>
                             <li className={styles.text} rows={4}>{comment.text}</li>
                         </div>
-                        <Button variant="contained" onClick={handleRemove} type='remove'>Удалить комментарий</Button>
+                        <Button onClick={() => handleRemoveComment(comment.createdAt)} variant="contained">Удалить комментарий</Button>
                     </div>
-                    : null
                 )}
-                </ul>
+
                 <div className={styles.commentsForm}>
-                    <TextField onChange={handleChangeValue} name='fullName' sx={{ marginBottom: 2, marginTop: 2, width: 400 }} id="filled-basic" label="Имя" placeholder='Введите имя' />
-                    <TextField onChange={handleChangeValue} name='email' sx={{ marginBottom: 2, width: 400 }} id="filled-basic" label="Почта" placeholder='Введите почту' />
+                    <TextField onChange={handleInputValue} name='fullName' sx={{ marginBottom: 2, marginTop: 2, width: 400 }} id="filled-basic" label="Имя" placeholder='Введите имя' />
+                    <TextField onChange={handleInputValue} name='email' sx={{ marginBottom: 2, width: 400 }} id="filled-basic" label="Почта" placeholder='Введите почту' />
                     <TextField
-                        onChange={handleChangeValue}
+                        onChange={handleInputValue}
                         sx={{ marginBottom: 2, width: 400 }}
                         name='text'
                         label="Комментарий"

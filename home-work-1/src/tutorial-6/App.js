@@ -3,6 +3,21 @@ import Article from './Article.jsx';
 export default function App() {
     const { pathname } = window.location;
     const pathnameId = pathname.split('/');
+    /* const Route = ({ children, path, exact }) => {
+        const { pathname } = window.location;
+        if (exact) {
+            if (path === pathname) {
+                return children;
+            }
+        } else {
+            if (pathname.includes(path)) {
+                return children;
+            }
+        }
+        return null;
+    }
+ */
+
 
     return (
         <div className="App">
@@ -10,23 +25,26 @@ export default function App() {
                 <h2>
                     <a href="/">React Blog</a>
                 </h2>
-                <Nav variant="pills" defaultActiveKey="/">
-                    <Nav.Item>
-                        <Nav.Link eventKey="/home" to="/">
-                            Главная
-                        </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/home" to="/about">
-                            Обо мне
-                        </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/home" to="/profile">
-                            Профиль
-                        </Nav.Link>
-                    </Nav.Item>
-                </Nav>
+                <Route path="/" exact>
+                    <Nav variant="pills" defaultActiveKey="/">
+                        <Nav.Item>
+                            <Nav.Link eventKey="/home" to="/">
+                                Главная
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="/home" to="/about">
+                                Обо мне
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="/home" to="/profile">
+                                Профиль
+                            </Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Route>
+
             </header>
             {
                 pathname === "/" && (
@@ -52,6 +70,9 @@ export default function App() {
                     </Card>
                 )
             }
+            <Route path="/help" exact>
+                <h1>Эта ссылка работает</h1>
+            </Route>
             <br />
             <Navbar bg="light" style={{ paddingLeft: 20 }}>
                 <Navbar.Brand href="#home">My site (c) 2021</Navbar.Brand>
