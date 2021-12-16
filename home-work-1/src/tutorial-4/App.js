@@ -50,17 +50,17 @@ const App = () => {
         "дурак"
     ];
 
-    let generatePhrase = () => {
-        let phrase = `${adjectivesArr[Math.floor(Math.random() * 29)]} ${adjectivesArr[Math.floor(Math.random() * 29)]} ${nounsArr[Math.floor(Math.random() * 10)]}`
-        
+    const generatePhrase = () => {
+        const phrase = `${adjectivesArr[Math.floor(Math.random() * 29)]} ${adjectivesArr[Math.floor(Math.random() * 29)]} ${nounsArr[Math.floor(Math.random() * 10)]}`
+
         return phrase;
     }
 
-    let handleClickGenerate = () => {
+    const handleClickGenerate = () => {
         setItems([generatePhrase(), ...items]);
     }
 
-    let handleClickRemove = () => {
+    const handleClickRemove = () => {
         setItems([]);
     }
 
