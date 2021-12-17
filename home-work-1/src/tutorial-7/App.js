@@ -6,7 +6,8 @@ import style from './App.module.css';
 
 const App = () => {
     const { handleSubmit, register, formState, reset } = useForm({
-        formState: {
+        mode: 'onChange',
+        defaultValues: {
             firstName: '',
             lastName: '',
             email: '',
@@ -15,22 +16,25 @@ const App = () => {
     });
 
     const onSubmit = (values) => {
-        console.log(values)
+        console.log(values);
+        reset({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: ''
+        })
     };
 
-    const isValid = !!formState.firstName && !!formState.lastName && !!formState.email && !!formState.password;
     return (
         <div className={style.form}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <div>
                     <TextField
                         {...register("firstName", {
-                            required: 'Это обязательное поле!',
                             pattern: {
                                 value: /^[А-Яа-я]+$/i,
                                 message: 'Wrong firstname!'
                             },
-                            maxLength: 15
                         })}
                         helperText={formState.errors.firstName && formState.errors.firstName.message}
                         error={!!formState.errors.firstName}
@@ -43,12 +47,10 @@ const App = () => {
                     />
                     <TextField
                         {...register("lastName", {
-                            required: 'Это обязательное поле!',
                             pattern: {
                                 value: /^[А-Яа-я]+$/i,
                                 message: 'Wrong lastname!'
                             },
-                            maxLength: 15
                         })}
                         helperText={formState.errors.lastName && formState.errors.lastName.message}
                         error={!!formState.errors.lastName}
@@ -64,12 +66,10 @@ const App = () => {
                 <div>
                     <TextField
                         {...register("email", {
-                            required: 'Это обязательное поле!',
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9._%+-]+\.[A-Z]{2,}$/i,
                                 message: "Это неверная почта!"
                             },
-                            maxLength: 15
                         })}
                         helperText={formState.errors.email && formState.errors.email.message}
                         error={!!formState.errors.email}
@@ -82,11 +82,8 @@ const App = () => {
                     />
                     <TextField
                         {...register("password", {
-                            required: "Это обязательное поле!",
-                            minLength: {
-                                value: 5,
-                                message: "Минимальная длина 5 символов"
-                            }
+                            required: 'Введите минимум 5 символов!',
+                            minLength: 5,
                         })}
                         helperText={formState.errors.password && formState.errors.password.message}
                         error={!!formState.errors.password}
@@ -104,31 +101,21 @@ const App = () => {
 
             <div>
                 <br />
-                <Button onClick={() => {
-                    handleSubmit(onSubmit)
-                    reset(
-                        {
-                            firstName: '',
-                            lastName: '',
-                            email: '',
-                            password: ''
-                        }
-                    )
-                }}
-                    disabled={!isValid}
+                <Button
+                    onClick={handleSubmit(onSubmit)}
+                    disabled={!formState.isValid}
                     variant="contained">
                     Зарегистрироваться
                 </Button>
-                <Button onClick={() => {
-                    reset(
-                        {
+                <Button
+                    onClick={() => {
+                        reset({
                             firstName: '',
                             lastName: '',
                             email: '',
                             password: ''
-                        }
-                    )
-                }}
+                        })
+                    }}
                     sx={{ marginLeft: 2 }}
                     variant="outlined">
                     Очистить
