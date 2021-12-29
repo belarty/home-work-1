@@ -17,7 +17,6 @@ const App = () => {
         const { name, value } = event.target;
         setInputValue({ ...inputValue, [name]: value })
     }
-
     const addNewComment = (e) => {
         e.preventDefault();
         setComments([...comments, { ...inputValue, createdAt: new Date() }]);
@@ -26,11 +25,11 @@ const App = () => {
         const remove = comments.filter((comment) => comment.createdAt !== createdAt)
         setComments([...remove])
     }
+
     useEffect(() => {
         const commentTo = JSON.parse(localStorage.getItem('comments')) || []
         setComments([...commentTo])
     }, []);
-
     useEffect(() => {
         localStorage.setItem('comments', JSON.stringify(comments))
     }, [comments]);
@@ -53,7 +52,6 @@ const App = () => {
                         <Button onClick={() => handleRemoveComment(comment.createdAt)} variant="contained">Удалить комментарий</Button>
                     </div>
                 )}
-
                 <div className={styles.commentsForm}>
                     <TextField onChange={handleInputValue} name='fullName' sx={{ marginBottom: 2, marginTop: 2, width: 400 }} id="filled-basic" label="Имя" placeholder='Введите имя' />
                     <TextField onChange={handleInputValue} name='email' sx={{ marginBottom: 2, width: 400 }} id="filled-basic" label="Почта" placeholder='Введите почту' />
