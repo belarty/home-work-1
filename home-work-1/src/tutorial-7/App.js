@@ -17,12 +17,7 @@ const App = () => {
 
     const onSubmit = (values) => {
         console.log(values);
-        reset({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: ''
-        })
+        reset()
     };
 
     return (
@@ -83,7 +78,14 @@ const App = () => {
                     <TextField
                         {...register("password", {
                             required: 'Введите минимум 5 символов!',
-                            minLength: 5,
+                            minLength: {
+                                value: 5,
+                                message: 'Minlength is 5 symbols!'
+                            },
+                            maxLength: {
+                            value: 15,
+                            message: 'Maxlength is 15 symbols!'
+                            }
                         })}
                         helperText={formState.errors.password && formState.errors.password.message}
                         error={!!formState.errors.password}

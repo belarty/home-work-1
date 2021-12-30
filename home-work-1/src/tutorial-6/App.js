@@ -3,7 +3,7 @@ import Article from './Article.jsx';
 export default function App() {
     const { pathname } = window.location;
     const pathnameId = pathname.split('/');
-    /* const Route = ({ children, path, exact }) => {
+    const Route = ({ children, path, exact }) => {
         const { pathname } = window.location;
         if (exact) {
             if (path === pathname) {
@@ -16,7 +16,7 @@ export default function App() {
         }
         return null;
     }
- */
+
 
 
     return (
