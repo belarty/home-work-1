@@ -17,6 +17,11 @@ const App = () => {
         isClearValue(e);
     };
 
+    useEffect(() => {
+        if (debounce) {
+            isClearValue("");
+        }
+    }, [debounce]);
 
     const isClearValue = (e: any) => {
         if (inputValue !== "") {
@@ -39,6 +44,7 @@ const App = () => {
             alert(`Пользователь ${inputValue} не найден`);
             setLoading(false);
         }
+        setInputValue('');
     };
     return (
         <div className="app">
@@ -54,11 +60,7 @@ const App = () => {
                         {loading ? "Подождите" : "Найти"}
                     </button>
                 </form>
-                {profile ? (
-                    <ProfilePage profile={profile} />
-                ) : (
-                    <div>Пусто</div>
-                )}
+                {profile ? <ProfilePage profile={profile} /> : <div>Пусто</div>}
             </div>
         </div>
     );
