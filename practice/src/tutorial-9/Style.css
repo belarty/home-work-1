@@ -15,27 +15,27 @@ body {
   color: var(--main-color);
 }
 
-#app {
+.app {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.app-container {
+.app_container {
   max-width: 560px;
 }
 
-.app-form {
+.app_form {
   position: relative;
   width: 100%;
   margin-bottom: 20px;
 }
 
-.app-input {
+.app_input {
   width: 100%;
-  padding: 18px 60px;
-  background-image: url('../components/img/search.svg');
+  padding: 18px 120px 18px 50px;
+  background-image: url('./components/img/search.svg');
   background-repeat: no-repeat;
   background-position: 23px center;
   background-size: 15px;
@@ -49,11 +49,11 @@ body {
   color: var(--main-color);
 }
 
-.app-input::placeholder {
+.app_input::placeholder {
   color: var(--main-color);
 }
 
-.app-form_btn {
+.app_form_btn {
   position: absolute;
   right: 8px;
   top: 7px;
@@ -145,14 +145,14 @@ body {
   font-size: 15px;
   line-height: 19px;
   letter-spacing: -0.02em;
-  background-image: url('./img/location.svg');
+  background-image: url('./components/img/location.svg');
   background-position: left center;
   background-repeat: no-repeat;
   background-size: 16px;
 }
 
 .app-user_location-item:last-child {
-  background-image: url('./img/link.svg');
+  background-image: url('./components/img/link.svg');
 }
 
 .app-user_location-item a {

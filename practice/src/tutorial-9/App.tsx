@@ -2,45 +2,64 @@ import React, { useState, useEffect } from "react";
 import ProfilePage from "./components/ProfilePage";
 import { IUser } from "./components/Type";
 import axios from "axios";
-import style from "./Style.module.css";
+import "./Style.css";
+import useDebounce from "./components/useDebounce";
 
 const App = () => {
     const [profile, setProfile] = useState<IUser[]>([]);
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleInputValue = ({ event }: any) => {
-        setTimeout(() => {
-            const value = event.target;
-            setInputValue(value);
-        }, 1000);
+    const debounce = useDebounce(inputValue, 1500);
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        isClearValue(e);
     };
-    useEffect(() => {}, []);
-    const getUser = async () => {
-        setLoading(true);
+
+
+    const isClearValue = (e: any) => {
+        if (inputValue !== "") {
+            getUser(e);
+        } else {
+            <div>Поле не должно быть пустым!</div>;
+        }
+    };
+
+    const getUser = async (e: any) => {
+        e.preventDefault();
         try {
-            let response = await axios.get<IUser[]>(
+            setLoading(true);
+            const { data } = await axios.get(
                 `https://api.github.com/users/${inputValue}`
             );
-            setProfile(response.data);
+            setProfile(data);
+            setLoading(false);
         } catch (error) {
-            alert(error);
+            alert(`Пользователь ${inputValue} не найден`);
+            setLoading(false);
         }
-        setLoading(false);
     };
     return (
-        <div>
-            <form className={style.app-form} onSubmit={getUser}>
-                <input
-                    className={style.app-input}
-                    onChange={handleInputValue}
-                    placeholder="Введите имя аккаунта"
-                />
-                <button className={style.app-form_btn} disabled={loading}>
-                    Найти
-                </button>
-            </form>
-            {inputValue ? <ProfilePage profile={profile} /> : <div>Пусто</div>}
+        <div className="app">
+            <div className="app_container">
+                <form className="app_form" onSubmit={handleSubmit}>
+                    <input
+                        value={inputValue}
+                        className="app_input"
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Введите имя аккаунта"
+                    />
+                    <button className="app_form_btn" disabled={loading}>
+                        {loading ? "Подождите" : "Найти"}
+                    </button>
+                </form>
+                {profile ? (
+                    <ProfilePage profile={profile} />
+                ) : (
+                    <div>Пусто</div>
+                )}
+            </div>
         </div>
     );
 };
