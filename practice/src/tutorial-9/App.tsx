@@ -6,7 +6,7 @@ import "./Style.css";
 import useDebounce from "./components/useDebounce";
 
 const App = () => {
-    const [profile, setProfile] = useState<IUser[]>([]);
+    const [profile, setProfile] = useState<IUser[]>();
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
 
