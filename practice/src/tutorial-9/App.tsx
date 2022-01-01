@@ -9,7 +9,7 @@ const App = () => {
     const [profile, setProfile] = useState<IUser[]>();
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const { pathname } = window.location;
     const debounce = useDebounce(inputValue, 1500);
 
     const handleSubmit = (e: any) => {
@@ -25,13 +25,13 @@ const App = () => {
 
     const isClearValue = (e: any) => {
         if (inputValue !== "") {
-            getUser(e);
+            getUser(e, pathname);
         } else {
             <div>Поле не должно быть пустым!</div>;
         }
     };
 
-    const getUser = async (e: any) => {
+    const getUser = async (e: any, pathname: string) => {
         e.preventDefault();
         try {
             setLoading(true);
@@ -44,7 +44,8 @@ const App = () => {
             alert(`Пользователь ${inputValue} не найден`);
             setLoading(false);
         }
-        setInputValue('');
+        setInputValue("");
+        window.history.pushState(pathname, 'Новое значение', inputValue);
     };
     return (
         <div className="app">
