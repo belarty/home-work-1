@@ -7,11 +7,7 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 
 const App = () => {
     const [comments, setComments] = useState([]);
-    const [inputValue, setInputValue] = useState({
-        fullName: '',
-        email: '',
-        text: '',
-    })
+    const [inputValue, setInputValue] = useState({});
 
     const handleInputValue = (event) => {
         const { name, value } = event.target;
